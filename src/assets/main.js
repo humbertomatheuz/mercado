@@ -1,13 +1,13 @@
 function goTo(pagina) {
   switch (pagina) {
     case "clientes":
-      window.location.href = "views/clientes.html";
+      window.location.href = "../views/clientes.html";
       break;
     case "produtos":
-      window.location.href = "views/produtos.html";
+      window.location.href = "@views/produtos.html";
       break;
     case "vendas":
-      window.location.href = "views/vendas.html";
+      window.location.href = "../views/vendas.html";
       break;
     default:
       alert("Página não encontrada");

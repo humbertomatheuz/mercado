@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supermercado Super - Tela de Vendas</title>
+    <link rel="stylesheet" href="../assets/css/vendas.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-section">
+        <img
+          src="https://www.designi.com.br/images/preview/10438126.jpg"
+          alt="Imagem do Supermercado"
+          class="main-image"
+        />
+      </div>
+
+      <div class="right-section">
+        <div class="col-md-4">
+          <div class="input-group" style="width: 30%">
+            <input
+              type="text"
+              id="cpf"
+              placeholder="CPF"
+              style="width: 80%; font-size: 14px"
+            />
+            <span class="input-group-addon">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4 text-center">
+          <span style="font-size: 14px">Nome:</span>
+          <span id="nome" style="font-size: 14px"></span>
+          <br />
+          <span style="font-size: 14px">CPF:</span>
+          <span id="cpf-valor" style="font-size: 14px"></span>
+        </div>
+        <div class="col-md-4 text-right">
+          <button
+            class="btn btn-success"
+            id="gerenciamento"
+            style="font-size: 14px"
+          >
+            Gerenciamento de clientes
+          </button>
+        </div>
+        <div class="input-fields">
+          <input type="text" id="barcode" placeholder="Código de Barras" />
+          <input
+            type="number"
+            id="quantity"
+            placeholder="Quantidade"
+            min="1"
+            value="1"
+          />
+          <button onclick="incluirProduto()">Incluir</button>
+        </div>
+
+        <div class="product-list">
+          <table id="productTable">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Preço Unitário</th>
+                <th>Quantidade</th>
+                <th>Preço Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="total-purchase">
+          <strong>Total da Compra: R$ <span id="totalPrice">0.00</span></strong>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
