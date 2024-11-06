@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supermercado Super - Tela de Vendas</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-section">
+        <img
+          src="https://www.designi.com.br/images/preview/10438126.jpg"
+          alt="Imagem do Supermercado"
+          class="main-image"
+        />
+      </div>
+
+      <div class="right-section">
+        <button onclick="goTo('clientes')">Gerenciamento de Clientes</button>
+        <button onclick="goTo('produtos')">Gerenciamento de Produtos</button>
+        <button onclick="goTo('vendas')">Vendas</button>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supermercado XYZ - Tela de Vendas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Cabeçalho -->
+    <header>
+      <div class="header-content">
+        <input
+          type="text"
+          placeholder="Buscar usuário..."
+          class="search-user"
+        />
+        <button onclick="abrirGerenciamentoClientes()">
+          Gerenciamento de Clientes
+        </button>
+      </div>
+    </header>
+
+    <!-- Corpo da Tela -->
+    <div class="container">
+      <!-- Imagem na metade esquerda -->
+      <div class="left-section">
+        <img
+          src="https://www.designi.com.br/images/preview/10438126.jpg"
+          alt="Imagem de produtos do supermercado"
+          class="main-image"
+        />
+      </div>
+
+      <!-- Campos de inserção e listagem na metade direita -->
+      <div class="right-section">
+        <div class="input-fields">
+          <input type="text" id="barcode" placeholder="Código de Barras" />
+          <input
+            type="number"
+            id="quantity"
+            placeholder="Quantidade"
+            min="1"
+            value="1"
+          />
+          <button onclick="incluirProduto()">Incluir</button>
+        </div>
+
+        <!-- Listagem dos produtos -->
+        <div class="product-list">
+          <table id="productTable">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Preço Unitário</th>
+                <th>Quantidade</th>
+                <th>Preço Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Produtos adicionados aparecerão aqui -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Total da Compra -->
+        <div class="total-purchase">
+          <strong>Total da Compra: R$ <span id="totalPrice">0.00</span></strong>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
