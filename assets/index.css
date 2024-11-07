@@ -181,7 +181,6 @@ form button {
     margin-left: 10px;
 }
 
-/* Responsividade para telas menores */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -220,14 +219,12 @@ form button {
 }
 
 @media (max-width: 768px) {
-    /* Ajustar os formulários */
     form input[type="text"],
     form input[type="number"] {
         width: 100%;
         max-width: none;
     }
 
-    /* Ajuste da tabela */
     table {
         font-size: 14px;
     }
@@ -236,14 +233,12 @@ form button {
         padding: 8px;
     }
 
-    /* Ajuste de botões */
     button {
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    /* Ajustes para telas menores */
     .container_table {
         padding: 10px;
     }

@@ -1,7 +1,6 @@
 <?php include 'db.php'; ?>
 
 <?php
-// Funções para consultar, inserir, atualizar e excluir produtos
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'];
 
@@ -11,12 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valor = $_POST['valor'];
             $codigo_barras = $_POST['codigo_barras'];
 
-            // Validação dos dados antes de inserir no banco
             if (empty($nome) || empty($valor) || empty($codigo_barras)) {
                 throw new Exception("Todos os campos são obrigatórios.");
             }
 
-            // Verificando se o código de barras já existe
             $stmt = $pdo->prepare("SELECT * FROM produtos WHERE codigo_barras = ?");
             $stmt->execute([$codigo_barras]);
             if ($stmt->rowCount() > 0) {
@@ -46,12 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute([$nome, $valor, $id]);
         }
     } catch (Exception $e) {
-        // Caso algum erro aconteça, uma mensagem amigável é retornada
         $error_message = $e->getMessage();
     }
 }
 
-// Consulta produtos
 $query = isset($_GET['query']) ? $_GET['query'] : '';
 $stmt = $pdo->prepare("SELECT * FROM produtos WHERE nome LIKE ? OR codigo_barras LIKE ?");
 $stmt->execute(["%$query%", "%$query%"]);

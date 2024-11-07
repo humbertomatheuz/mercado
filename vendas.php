@@ -1,8 +1,7 @@
 <?php
 include 'db.php';
-session_start(); // Inicia a sessão
+session_start();
 
-// Funções para consultar, inserir, atualizar e excluir produtos
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = isset($_POST['action']) ? $_POST['action'] : '';
 
@@ -12,19 +11,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valor = isset($_POST['valor']) ? $_POST['valor'] : '';
             $codigo_barras = isset($_POST['codigo_barras']) ? $_POST['codigo_barras'] : '';
 
-            // Validação dos dados antes de inserir no banco
             if (empty($nome) || empty($valor) || empty($codigo_barras)) {
                 throw new Exception("Todos os campos são obrigatórios.");
             }
 
-            // Verificando se o código de barras já existe
             $stmt = $pdo->prepare("SELECT * FROM produtos WHERE codigo_barras = ?");
             $stmt->execute([$codigo_barras]);
             if ($stmt->rowCount() > 0) {
                 throw new Exception("Código de barras já existe.");
             }
 
-            // Inserir o produto no banco
             $stmt = $pdo->prepare("INSERT INTO produtos (nome, valor, codigo_barras) VALUES (?, ?, ?)");
             $stmt->execute([$nome, $valor, $codigo_barras]);
         } elseif ($action == 'delete') {
@@ -33,18 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 throw new Exception("ID inválido.");
             }
 
-            // Excluir produto do banco
             $stmt = $pdo->prepare("DELETE FROM produtos WHERE id = ?");
             $stmt->execute([$id]);
         } elseif ($action == 'update_quantity') {
-            // Atualizar quantidade de um item
             $item_id = isset($_POST['item_id']) ? $_POST['item_id'] : '';
             $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
             if (isset($_SESSION['sale_items'][$item_id])) {
                 $_SESSION['sale_items'][$item_id]['quantity'] = $quantity;
             }
         } elseif ($action == 'remove') {
-            // Remover item da venda
             $item_id = isset($_POST['item_id']) ? $_POST['item_id'] : '';
             if (isset($_SESSION['sale_items'][$item_id])) {
                 unset($_SESSION['sale_items'][$item_id]);
@@ -57,26 +50,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 function gerarCSV($sale_items, $pdo)
 {
-    // Verifique se há itens de venda para gerar o CSV
     if (empty($sale_items)) {
         echo "Nenhum item para imprimir!";
         exit;
     }
 
-    // Definir o nome do arquivo
     $filename = "venda_" . date('Y-m-d_H-i-s') . ".csv";
 
-    // Definindo o cabeçalho para que o navegador faça o download do arquivo CSV
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="' . $filename . '"');
 
-    // Abrindo o arquivo para escrita
     $output = fopen('php://output', 'w');
 
-    // Escrevendo o cabeçalho no CSV
     fputcsv($output, ['Produto', 'Valor', 'Quantidade', 'Subtotal']);
 
-    // Calculando o total
     $total = 0;
     foreach ($sale_items as $item_id => $item_data) {
         $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = ?");
@@ -87,7 +74,6 @@ function gerarCSV($sale_items, $pdo)
             $subtotal = $produto['valor'] * $item_data['quantity'];
             $total += $subtotal;
 
-            // Escrevendo os dados do item no CSV
             fputcsv($output, [
                 $produto['nome'],
                 'R$ ' . number_format($produto['valor'], 2, ',', '.'),
@@ -97,47 +83,40 @@ function gerarCSV($sale_items, $pdo)
         }
     }
 
-    // Adicionando o total no final
     fputcsv($output, ['Total', '', '', 'R$ ' . number_format($total, 2, ',', '.')]);
 
-    // Fechar o arquivo CSV
     fclose($output);
     exit;
 }
 
-// Gerar o CSV quando o botão de impressão for clicado
 if (isset($_POST['imprimir'])) {
     gerarCSV($_SESSION['sale_items'], $pdo);
 }
 
-// Consulta produtos
 $query = isset($_GET['query']) ? $_GET['query'] : '';
 $stmt = $pdo->prepare("SELECT * FROM produtos WHERE nome LIKE ? OR codigo_barras LIKE ?");
 $stmt->execute(["%$query%", "%$query%"]);
 $produtos = $stmt->fetchAll();
 
-// Inicializa a sessão para armazenar os itens da venda, se não estiver inicializada
 if (!isset($_SESSION['sale_items'])) {
     $_SESSION['sale_items'] = [];
 }
 
-// Processa a adição de produtos na venda
 if (isset($_POST['sale_items']) && !empty($_POST['sale_items'])) {
     foreach ($_POST['sale_items'] as $item_id) {
         if (!isset($_SESSION['sale_items'][$item_id])) {
-            $_SESSION['sale_items'][$item_id] = ['id' => $item_id, 'quantity' => 1]; // Quantidade inicial como 1
+            $_SESSION['sale_items'][$item_id] = ['id' => $item_id, 'quantity' => 1];
         }
     }
 }
 
-// Processa o cálculo do total
 $total = 0;
 foreach ($_SESSION['sale_items'] as $item_id => $item_data) {
     $stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = ?");
     $stmt->execute([$item_id]);
     $produto = $stmt->fetch();
     if ($produto) {
-        $total += $produto['valor'] * $item_data['quantity']; // Multiplica pelo valor da quantidade
+        $total += $produto['valor'] * $item_data['quantity'];
     }
 }
 ?>
@@ -155,7 +134,6 @@ foreach ($_SESSION['sale_items'] as $item_id => $item_data) {
     <div class="container_table">
         <h1>Vendas</h1>
 
-        <!-- Formulário de Pesquisa -->
         <form method="GET">
             <input type="text" name="query" placeholder="Pesquise por nome ou código de barras" value="<?php echo $query; ?>" required>
             <button type="submit">Pesquisar</button>
@@ -190,7 +168,6 @@ foreach ($_SESSION['sale_items'] as $item_id => $item_data) {
             <?php endif; ?>
         </table>
 
-        <!-- Tabela de Itens na Venda -->
         <h2>Itens na Venda</h2>
         <table>
             <tr>
@@ -235,7 +212,6 @@ foreach ($_SESSION['sale_items'] as $item_id => $item_data) {
             <?php endif; ?>
         </table>
 
-        <!-- Total da Venda -->
         <h3>Total: R$ <?php echo number_format($total, 2, ',', '.'); ?></h3>
 
         <form method="POST" action="vendas.php">
