@@ -1,0 +1,264 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.container_table {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+
+}
+
+.left-section {
+    flex: 1;
+    background-color: #e9ecef;
+}
+
+.main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section button {
+    flex: 1;
+    font-size: 4rem;
+    color: #fff;
+    background-color: #6bb42e;
+    border: none;
+    border-bottom: 1px solid #5e8041;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.right-section button:hover {
+    background-color: #59882f;
+}
+
+.right-section button:last-child {
+    border-bottom: none;
+}
+
+h1,
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+h2 {
+    font-size: 22px;
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    min-width: 25%;
+}
+
+th {
+    background-color: #6bb42e;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+td form input[type="text"],
+td form input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    min-width: 400px;
+    border-radius: 4px;
+}
+
+td form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #6bb42e;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+td form button:hover {
+    background-color: #5a9b26;
+}
+
+td form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Ajustes no formulário de adicionar produto */
+form input[type="text"],
+form input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    min-width: 25%;
+    border-radius: 4px;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #6bb42e;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.voltar {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #6bb42e;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding-left: 0;
+    }
+
+    .left-section {
+        height: 50vh;
+    }
+
+    .right-section {
+        height: 50vh;
+    }
+
+    .right-section form {
+        width: 100%;
+        display: block;
+    }
+
+    .right-section button {
+        width: 100%;
+        font-size: 1.5rem;
+    }
+
+    td form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    td form input[type="text"],
+    td form input[type="number"],
+    td form button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Ajustar os formulários */
+    form input[type="text"],
+    form input[type="number"] {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Ajuste da tabela */
+    table {
+        font-size: 14px;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+
+    /* Ajuste de botões */
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes para telas menores */
+    .container_table {
+        padding: 10px;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+        padding: 8px;
+    }
+
+    button {
+        padding: 8px 15px;
+    }
+
+    table th, table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+}
